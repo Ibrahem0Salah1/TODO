@@ -1,0 +1,46 @@
+
+    <div class="container" >
+        <div class="listOP">
+            <i (click)="onViewClick()" *ngIf="data.tasks.length>0" style="cursor: pointer;" class="bi bi-eye views"></i>
+        </div>
+        <!--input title -->
+        <input class="inputTitle"  type="text" [placeholder]="placed" [(ngModel)]="data.title">
+
+        <!--input task -->
+        <input class="inputTask" 
+        [(ngModel)]="newTask"
+        #inputTask 
+        (keyup.enter)="addTask()"
+        (blur)="addTask()"
+        type="text" 
+        placeholder="Add task...">  
+
+
+
+
+        <ul class="list-group list-group listgroup">
+            <li class="list-group-item task"   *ngFor="let task of data.tasks let i=index">
+                <input
+                *ngIf="editingTaskIndex === i" 
+                (keyup.enter)="saveTask(i)" 
+                (blur)="saveTask(i)" class="inputTask" type="text"
+                [(ngModel)]="newString"> 
+                <div class="btnss">
+                    <i (click)="finishTask(i)"  class="bi bi-check2-square"></i>
+                    <i (click)="deleteTask(i)"  class="bi bi-trash3"></i>
+                </div>
+                <p style="padding: 5px 0px; margin: 5px 0px; " *ngIf="editingTaskIndex !== i" (dblclick)="editTask(i)" >{{task}}</p>
+                <!-- btns edit and del -->
+            </li>
+        </ul>
+        <ul class="list-group listgroup2" *ngIf="data.finishedTasks.length>0">
+            <li class="list-group-item task" *ngFor="let finishedTask of data.finishedTasks" >
+                <p>{{finishedTask}}</p>
+            </li>
+        </ul>
+        <button style="margin: 10px 2px;" (click)="deleteList(data.id, data.title)" *ngIf="data.tasks.length>0 || data.finishedTasks.length>0" class="btn btn-danger">Delete List</button>  
+    </div>
+    
+
+<!-- Modal -->
+

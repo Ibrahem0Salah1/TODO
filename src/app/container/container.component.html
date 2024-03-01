@@ -1,0 +1,50 @@
+
+<body [ngStyle]="{'opacity' : goForIt ? 0.3 : 1}" style="background-color: #161d20; scroll-behavior: smooth;">
+    <div style="background-color: #161d20;" class="Welcome">
+        <h1>Welcome to your To Do app</h1>
+    </div>
+    <ul class="Gudlines">
+        <h3 >Gudlines</h3>
+        <li>doubleClick on a task to edit</li>
+        <li>click on view icon to open task modal</li>
+        <li>finished task are below the current tasks in the same list</li>
+    </ul>
+    <!-- "row p-2  justify-content-start flex-wrap  align-items-center " -->
+    <div class="flexed">
+        <app-one-to-do class="zz "
+        [lists]="lists" *ngFor="let list of lists "
+        [data]="list" 
+        (openModal)="openModal(list)"></app-one-to-do>
+        <div class="addList">
+            <i class="bi bi-plus-lg plus zz justify-self-center" (click)="addList()"></i>
+        </div>
+    </div>
+</body>
+<div class="modal"  *ngIf="selectedList" id="modal" tabindex="-1"  role="dialog">
+    <div class="container">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content modalStyle"  (blur)="closeModal()">
+                <div class="modal-header">
+                    <h5 class="modal-title"  >{{selectedList.title}}</h5>
+                </div>
+                <div class="modal-body">
+                    <ul style="padding: 4px; margin: 5px;" class="list-group listgroup ulfinished"   *ngFor="let task of selectedList.tasks">
+                        <li  class="list-group-item task">
+                            <p>{{task}}</p>
+    
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer modalFinishedTasks" >
+                    <ul class="modalFinishedTasks listgroup2">
+                        <h4 style="color: seagreen;">Done</h4>
+                        <li class="list-group-item task"   *ngFor="let taskfinsh of selectedList.finishedTasks">
+                            <p >{{taskfinsh}}</p>
+                        </li>
+                    </ul>
+                    <button type="button" class="btn close btn-danger"   (click)="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
